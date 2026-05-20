@@ -34,6 +34,10 @@ app.get("/nikhil",(req, res) => {
 
 //connect to db
 db();
+
+//user routes
+app.use("/api/v1/users/", userRoutes)
+
 app.listen(port, ()=>{
     console.log(`Example app listening on port ${port}`);
 });
