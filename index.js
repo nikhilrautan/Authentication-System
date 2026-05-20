@@ -21,9 +21,16 @@ app.use(express.urlencoded({extended:true}))
 const port = process.env.PORT || 4000;
 
 
-app.get("/",(req,res) => {
+app.get("/",(req, res) => {
     res.send("Hello World");
 });
+
+app.get("/nikhil",(req, res) => {
+    res.send("Nikhil!");
+});
+
+
+
 console.log(process.env.PORT);
 
 //connect to db
