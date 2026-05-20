@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
 
-//export a function that connects to db
+dotenv.config();
 
-const db=()=>{
-    mongoose
-.connect(process.env.MONGO_URL)
-.then(()=>{
-    console.log("Connecting to Mongodb")
+const db = async () => {
+  try {
+    console.log("Trying to connect DB...");
 
-})
+    await mongoose.connect(process.env.MONGO_URL, {
+      serverSelectionTimeoutMS: 5000,
+    });
 
-.catch((err)=>{
-    console.log("Error connecting to Mongodb");
-});
-}
+    console.log("MongoDB connected successfully");
+  } catch (err) {
+    console.log("Error connecting to MongoDB:", err.message);
+  }
+};
 
 export default db;

@@ -10,9 +10,9 @@ const app = express();
 app.use(
     cors({
     origin: process.env.BASE_URL,
-    Credential: true,
+    credential: true,
     methods: ['GET','POST','DELETE','OPTIONS'],
-    allowHeaders :['Content-Type' , 'Authorizationn'],
+    allowedHeaders :['Content-Type' , 'Authorization'],
     })
 );
 
