@@ -1,9 +1,10 @@
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import db from "./utils/db.js";
 
+//import all routes
+import userRoutes from ".routes/user.routes.js"
 dotenv.config();
 const app = express();
 
@@ -30,8 +31,6 @@ app.get("/nikhil",(req, res) => {
 });
 
 
-
-console.log(process.env.PORT);
 
 //connect to db
 db();
