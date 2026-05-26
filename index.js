@@ -7,7 +7,6 @@ import db from "./utils/db.js";
 import userRoutes from ".routes/user.routes.js"
 dotenv.config();
 const app = express();
-
 app.use(
     cors({
     origin: process.env.BASE_URL,
