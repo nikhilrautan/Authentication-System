@@ -1,9 +1,7 @@
 const registerUser = async (req, res) => {
 
-    // get data
     const { name, email, password } = req.body;
 
-    // validate
     if (!name || !email || !password) {
 
         return res.status(400).json({
@@ -12,21 +10,24 @@ const registerUser = async (req, res) => {
         });
     }
 
-    // success response
     res.status(200).json({
         success: true,
-        message: "All required fields got",
+        message: "Data received",
         user: {
             name,
             email,
             password
         }
     });
+    try{
+        const existingUser = User.findOne({email})
+        if(existingUser){
+
+        }
+    }
+    catch(error){
+        
+    }
 };
 
-const login = async (req, res) => {
-
-    res.send("login route");
-};
-
-export { registerUser, login };
+export { registerUser };
