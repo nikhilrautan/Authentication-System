@@ -13,5 +13,8 @@ const login = async (req, res)=>{
 //save token in database
 //send token as email to user
 //send success status to user
+
+req.body
+
 };
 export {registerUser}
