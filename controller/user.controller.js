@@ -14,7 +14,7 @@ const login = async (req, res)=>{
 //send token as email to user
 //send success status to user
 
-req.body
+const{name,email,password} = req.body
 
 };
 export {registerUser}
