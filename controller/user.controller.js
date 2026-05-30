@@ -63,8 +63,8 @@ const transporter = nodemailer.createTransport({
 });
 
 const mailOption = {
-     from: '"Example Team" <team@example.com>', // sender address
-    to: "alice@example.com, bob@example.com", // list of recipients
+     from: process.env.MAILTRAP_SENDEREMAIL, // sender address
+    to: user.email, // list of recipients
     subject: "Hello", // subject line
     text: "Hello world?", // plain text body
     html: "<b>Hello world?</b>", // HTML body
