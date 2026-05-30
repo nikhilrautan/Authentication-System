@@ -61,6 +61,14 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
 });
+
+const mailOption = {
+     from: '"Example Team" <team@example.com>', // sender address
+    to: "alice@example.com, bob@example.com", // list of recipients
+    subject: "Hello", // subject line
+    text: "Hello world?", // plain text body
+    html: "<b>Hello world?</b>", // HTML body
+}
         
     }
     catch(error){
