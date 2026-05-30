@@ -35,13 +35,13 @@ const registerUser = async (req, res) => {
             email,
             password
         })
-
+      // user already exists
         if(!user){
             return res.status(400).json({
             message:"User already existis"
          });
         }
-
+      
        const token = crypto.randomBytes(32).toString("hex")
        console.log(token);
        user.verificationToken = token
