@@ -45,6 +45,7 @@ const registerUser = async (req, res) => {
        const token = crypto.randomBytes(32).toString("hex")
        console.log(token);
        user.verificationToken = token
+       //save token in database
        await user.save()
 
         
