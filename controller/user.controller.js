@@ -1,5 +1,6 @@
 import User from "../model/User.model.js"
 import crypto from "crypto"
+import nodemailer from "nodemailer"
 const registerUser = async (req, res) => {
 
     const { name, email, password } = req.body;
@@ -49,7 +50,16 @@ const registerUser = async (req, res) => {
        await user.save()
 
         // send token as email to user
-
+       // Create a transporter using SMTP
+const transporter = nodemailer.createTransport({
+  host: "smtp.example.com",
+  port: 587,
+  secure: false, // use STARTTLS (upgrade connection to TLS after connecting)
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
         
     }
     catch(error){
