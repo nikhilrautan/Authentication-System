@@ -29,6 +29,13 @@ const registerUser = async (req, res) => {
             message:"User not registered"
          });
         }
+        
+        const user = await User.create({
+            name,
+            email,
+            password
+        })
+        
         if(!user){
             return res.status(400).json({
             message:"User already existis"
@@ -37,11 +44,8 @@ const registerUser = async (req, res) => {
 
        const token = crypto.randomBytes(32).toString("hex")
        console.log(token);
-        const user = await User.create({
-            name,
-            email,
-            password
-        })
+
+        
     }
     catch(error){
 
