@@ -48,6 +48,8 @@ const registerUser = async (req, res) => {
        //save token in database
        await user.save()
 
+        // send token as email to user
+
         
     }
     catch(error){
