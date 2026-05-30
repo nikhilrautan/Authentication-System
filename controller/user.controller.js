@@ -49,8 +49,9 @@ const registerUser = async (req, res) => {
        //save token in database
        await user.save()
 
-        // send token as email to user
-       // Create a transporter using SMTP
+    // send token as email to user
+
+// Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
   host: "smtp.example.com",
   port: 587,
