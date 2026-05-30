@@ -1,3 +1,5 @@
+import User from "../model/User.model.js"
+import crypto from "crypto"
 const registerUser = async (req, res) => {
 
     const { name, email, password } = req.body;
@@ -33,6 +35,7 @@ const registerUser = async (req, res) => {
          });
         }
 
+        crypto.randomBytes
         const user = await User.create({
             name,
             email,
