@@ -35,8 +35,8 @@ const registerUser = async (req, res) => {
          });
         }
 
-        crypto.randomBytes(32).toString("hex")
-        
+       const token = crypto.randomBytes(32).toString("hex")
+       console.log(token);
         const user = await User.create({
             name,
             email,
