@@ -78,7 +78,9 @@ const mailOption = {
         
     }
     catch(error){
-
+     res.status(400).json({
+        
+     })
     }
 };
 
