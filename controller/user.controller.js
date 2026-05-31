@@ -81,7 +81,7 @@ const mailOption = {
      res.status(400).json({
         message: "User not registered ",
         success: false,
-     })
+     });
     }
 };
 
