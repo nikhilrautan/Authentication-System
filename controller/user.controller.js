@@ -79,7 +79,7 @@ const mailOption = {
     }
     catch(error){
      res.status(400).json({
-        message: "User registered successfully",
+        message: "User not registered successfully",
      })
     }
 };
