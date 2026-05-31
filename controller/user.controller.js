@@ -65,10 +65,13 @@ const transporter = nodemailer.createTransport({
 const mailOption = {
      from: process.env.MAILTRAP_SENDEREMAIL, // sender address
     to: user.email, // list of recipients
-    subject: "Hello", // subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>", // HTML body
+    subject: "Verify your email", // subject line
+    text:`Please click on the following link : 
+    ${process.env.BASE_URL}/api/v1/users/verify/${token}
+    `,
 }
+   await transporter.sendMail(mailOption)
+   res.status(200)
         
     }
     catch(error){
