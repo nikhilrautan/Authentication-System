@@ -71,7 +71,7 @@ const mailOption = {
     `,
 }
    await transporter.sendMail(mailOption)
-   res.status(200).json({
+   res.status(201).json({
     message:"User registered successfully",
     success: true
    })
