@@ -71,7 +71,9 @@ const mailOption = {
     `,
 }
    await transporter.sendMail(mailOption)
-   res.status(200)
+   res.status(200).json({
+    
+   })
         
     }
     catch(error){
