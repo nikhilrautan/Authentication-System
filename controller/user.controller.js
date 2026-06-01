@@ -99,10 +99,10 @@ const verifyUser = async (req,res)=>{
 
     if(!token){
         return res.status(400).json({
-            message:"Invalid token"
-            
+            message:"Invalid token"           
         })
     }
+    User.findOne({verificationToken: token})
 };
 
 export { registerUser };
