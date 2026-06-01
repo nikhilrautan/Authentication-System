@@ -88,6 +88,7 @@ const verifyUser = async (req,res)=>{
     //get token from url
     // validate
     // find user Base in token
+    //if not
 }
 
 export { registerUser };
