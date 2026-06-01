@@ -165,7 +165,18 @@ const login = async (req,res)=>{
        expiresIn: '24h'
     }
    );
+   const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    maxAge: 24*60*60*1000
+   }
+   res.cookie("token",token,cookieOptions)
 
+   res.status(200).json({
+    success: true,
+    message: "Login successful",
+    
+   })
  } catch (error) {
 
     }
