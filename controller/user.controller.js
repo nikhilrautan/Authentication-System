@@ -89,6 +89,7 @@ const verifyUser = async (req,res)=>{
     // validate
     // find user Base in token
     //if not
+    // set isVerified field to true
 }
 
 export { registerUser };
