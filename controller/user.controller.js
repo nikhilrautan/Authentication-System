@@ -84,5 +84,6 @@ const mailOption = {
      });
     }
 };
+const verifyUser = async (req)
 
 export { registerUser };
