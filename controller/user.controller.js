@@ -1,7 +1,7 @@
 import User from "../model/User.model.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
-
+import bcrypt from "bcryptjs";
 const registerUser = async (req, res) => {
 
     const { name, email, password } = req.body;
@@ -148,11 +148,11 @@ const login = async (req,res)=>{
             message : "Invalid email or password",
         });
     }
+    }
 
-    
     catch (error) {
 
     }
-    }
-}
+ }
+
 export { registerUser, verifyUser };
