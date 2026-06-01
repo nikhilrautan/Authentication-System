@@ -102,7 +102,7 @@ const verifyUser = async (req,res)=>{
             message:"Invalid token"           
         })
     }
-    User.findOne({verificationToken: token})
+ const user = await User.findOne({verificationToken: token})
 };
 
 export { registerUser };
