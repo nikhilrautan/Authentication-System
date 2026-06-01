@@ -86,6 +86,7 @@ const mailOption = {
 };
 const verifyUser = async (req,res)=>{
     //get token from url
+    // validate
 }
 
 export { registerUser };
