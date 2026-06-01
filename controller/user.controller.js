@@ -94,7 +94,7 @@ const verifyUser = async (req,res)=>{
     // save
     //return response
 
-    const {token} = req.params
+    const {token} = req.params;
 }
 
 export { registerUser };
