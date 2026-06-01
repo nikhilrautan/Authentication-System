@@ -115,3 +115,4 @@ const verifyUser = async (req,res)=>{
 };
 
 export { registerUser };
+// learned to design an authentication system based on otp
