@@ -92,6 +92,7 @@ const verifyUser = async (req,res)=>{
     // set isVerified field to true
     //remove verification token
     // save
+    //return response
 }
 
 export { registerUser };
