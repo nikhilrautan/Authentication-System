@@ -93,6 +93,8 @@ const verifyUser = async (req,res)=>{
     //remove verification token
     // save
     //return response
+
+    const {token} = req.params
 }
 
 export { registerUser };
