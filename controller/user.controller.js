@@ -107,9 +107,10 @@ const verifyUser = async (req,res)=>{
  if(!user){
         return res.status(400).json({
             message:"Invalid token"           
-        });
-        
+        });   
     }
+    user.isVerified = true
+    user.verificationToken = undefined
 };
 
 export { registerUser };
