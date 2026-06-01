@@ -90,6 +90,7 @@ const verifyUser = async (req,res)=>{
     // find user Base in token
     //if not
     // set isVerified field to true
+    //remove verification token
 }
 
 export { registerUser };
