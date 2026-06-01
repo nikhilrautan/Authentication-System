@@ -1,10 +1,12 @@
-import User from "../model/User.model.js"
-import crypto from "crypto"
-import nodemailer from "nodemailer"
+import User from "../model/User.model.js";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
+
 const registerUser = async (req, res) => {
 
     const { name, email, password } = req.body;
 
+    // validate
     if (!name || !email || !password) {
 
         return res.status(400).json({
@@ -13,106 +15,122 @@ const registerUser = async (req, res) => {
         });
     }
 
-    res.status(200).json({
-        success: true,
-        message: "Data received",
-        user: {
-            name,
-            email,
-            password
+    try {
+
+        // check if user already exists
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: "User already exists",
+            });
         }
-    });
-      
-    try{
-        const existingUser = await User.findOne({email})
-        if(existingUser){
-         return res.status(400).json({
-            message:"User not registered"
-         });
-        }
-        
+
+        // create user
         const user = await User.create({
             name,
             email,
-            password
-        })
-      // user already exists
-        if(!user){
+            password,
+        });
+
+        if (!user) {
             return res.status(400).json({
-            message:"User already existis"
-         });
+                success: false,
+                message: "User creation failed",
+            });
         }
-      
-       const token = crypto.randomBytes(32).toString("hex")
-       console.log(token);
-       user.verificationToken = token
-       //save token in database
-       await user.save()
 
-    // send token as email to user
+        // create verification token
+        const token = crypto.randomBytes(32).toString("hex");
 
-// Create a transporter using SMTP
-const transporter = nodemailer.createTransport({
-  host: process.env.MAILTRAP_HOST,
-  port: process.env.MAILTRAP_PORT,
-  secure: false, 
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+        console.log(token);
 
-const mailOption = {
-     from: process.env.MAILTRAP_SENDEREMAIL, // sender address
-    to: user.email, // list of recipients
-    subject: "Verify your email", // subject line
-    text:`Please click on the following link : 
-    ${process.env.BASE_URL}/api/v1/users/verify/${token}
-    `,
-}
-   await transporter.sendMail(mailOption)
-   res.status(201).json({
-    message:"User registered successfully",
-    success: true
-   })
-        
-    }
-    catch(error){
-     res.status(400).json({
-        message: "User not registered ",
-        success: false,
-     });
-    }
-};
-const verifyUser = async (req,res)=>{
-    //get token from url
-    // validate
-    // find user Base in token
-    //if not
-    // set isVerified field to true
-    //remove verification token
-    // save
-    //return response
+        user.verificationToken = token;
 
-    const {token} = req.params;
-    console.log(token);
+        // save token in database
+        await user.save();
 
-    if(!token){
-        return res.status(400).json({
-            message:"Invalid token"           
+        // send token as email
+
+        const transporter = nodemailer.createTransport({
+            host: process.env.MAILTRAP_HOST,
+            port: process.env.MAILTRAP_PORT,
+            secure: false,
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
+            },
+        });
+
+        const mailOption = {
+            from: process.env.MAILTRAP_SENDEREMAIL,
+            to: user.email,
+            subject: "Verify your email",
+            text: `Please click on the following link:
+${process.env.BASE_URL}/api/v1/users/verify/${token}`,
+        };
+
+        await transporter.sendMail(mailOption);
+
+        return res.status(201).json({
+            success: true,
+            message: "User registered successfully. Please verify your email.",
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: error.message,
         });
     }
- const user = await User.findOne({verificationToken: token})
-
- if(!user){
-        return res.status(400).json({
-            message:"Invalid token"           
-        });   
-    }
-    user.isVerified = true
-    user.verificationToken = undefined
-    await user.save()
 };
 
-export { registerUser };
-// learned to design an authentication system based on otp
+const verifyUser = async (req, res) => {
+
+    try {
+
+        // get token from url
+        const { token } = req.params;
+
+        if (!token) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid token",
+            });
+        }
+
+        // find user by token
+        const user = await User.findOne({
+            verificationToken: token,
+        });
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid token",
+            });
+        }
+
+        // verify user
+        user.isVerified = true;
+        user.verificationToken = undefined;
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Email verified successfully",
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+export { registerUser, verifyUser };
