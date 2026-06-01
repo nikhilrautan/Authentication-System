@@ -2,6 +2,7 @@ import User from "../model/User.model.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 const registerUser = async (req, res) => {
 
     const { name, email, password } = req.body;
@@ -148,9 +149,24 @@ const login = async (req,res)=>{
             message : "Invalid email or password",
         });
     }
-    }
+    
+   const isMatch = await bcrypt.compare(password, user.password)
+   console.log(isMatch);
 
-    catch (error) {
+   if(!isMatch){
+    return res.status(400).json({
+        message: "Invalid email or password",
+    });
+   }
+   const token = jwt.sign(
+    {id: user._id, ROLE: user.role},
+
+    "shhhhh",{
+       expiresIn: '24h'
+    }
+   );
+
+ } catch (error) {
 
     }
  }
