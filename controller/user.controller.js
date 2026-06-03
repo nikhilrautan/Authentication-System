@@ -71,7 +71,7 @@ const registerUser = async (req, res) => {
 ${process.env.BASE_URL}/api/v1/users/verify/${token}`,
         };
 
-        await transporter.sendMail(mailOption);
+        //await transporter.sendMail(mailOption);
 
         return res.status(201).json({
             success: true,
