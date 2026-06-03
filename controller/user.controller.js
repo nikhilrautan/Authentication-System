@@ -72,7 +72,6 @@ ${process.env.BASE_URL}/api/v1/users/verify/${token}`,
         };
 
         //await transporter.sendMail(mailOption);
-
         return res.status(201).json({
             success: true,
             message: "User registered successfully. Please verify your email.",
