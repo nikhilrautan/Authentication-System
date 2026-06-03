@@ -3,13 +3,13 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
 const registerUser = async (req, res) => {
 
     const { name, email, password } = req.body;
 
     // validate
     if (!name || !email || !password) {
-
         return res.status(400).json({
             success: false,
             message: "All fields are required",
@@ -53,7 +53,6 @@ const registerUser = async (req, res) => {
         await user.save();
 
         // send token as email
-
         const transporter = nodemailer.createTransport({
             host: process.env.MAILTRAP_HOST,
             port: process.env.MAILTRAP_PORT,
@@ -80,6 +79,8 @@ ${process.env.BASE_URL}/api/v1/users/verify/${token}`,
         });
 
     } catch (error) {
+
+        console.error("REGISTER ERROR:", error);
 
         return res.status(500).json({
             success: false,
@@ -127,6 +128,8 @@ const verifyUser = async (req, res) => {
 
     } catch (error) {
 
+        console.error("VERIFY ERROR:", error);
+
         return res.status(500).json({
             success: false,
             message: error.message,
@@ -134,57 +137,71 @@ const verifyUser = async (req, res) => {
     }
 };
 
-const login = async (req,res)=>{
-    const {email,password} = req.body
+const login = async (req, res) => {
 
-    if(!email || ! password){
+    const { email, password } = req.body;
+
+    if (!email || !password) {
         return res.status(400).json({
             message: "All fields are required "
-        })
-    }
-    try{
-        const user = await User.findOne({email})
-        if(!user){
-            return res.status(400).json({
-            message : "Invalid email or password",
         });
     }
-    
-   const isMatch = await bcrypt.compare(password, user.password)
-   console.log(isMatch);
 
-   if(!isMatch){
-    return res.status(400).json({
-        message: "Invalid email or password",
-    });
-   }
-   const token = jwt.sign(
-    {id: user._id, ROLE: user.role},
+    try {
 
-    "shhhhh",{
-       expiresIn: '24h'
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({
+                message: "Invalid email or password",
+            });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        console.log(isMatch);
+
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Invalid email or password",
+            });
+        }
+
+        const token = jwt.sign(
+            { id: user._id, ROLE: user.role },
+            "shhhhh",
+            {
+                expiresIn: "24h"
+            }
+        );
+
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true,
+            maxAge: 24 * 60 * 60 * 1000
+        };
+
+        res.cookie("token", token, cookieOptions);
+
+        res.status(200).json({
+            success: true,
+            message: "Login successful",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                role: user.role
+            }
+        });
+
+    } catch (error) {
+
+        console.error("LOGIN ERROR:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
     }
-   );
-   const cookieOptions = {
-    httpOnly: true,
-    secure: true,
-    maxAge: 24*60*60*1000
-   }
-   res.cookie("token",token,cookieOptions)
+};
 
-   res.status(200).json({
-    success: true,
-    message: "Login successful",
-    token,
-    user:{
-        id: user._id,
-        name: user.name,
-        role: user.role
-    }
-   });
- } catch (error) {
-
-    }
- }
-
-export { registerUser, verifyUser, login};
+export { registerUser, verifyUser, login };
