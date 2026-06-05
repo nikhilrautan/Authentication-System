@@ -16,10 +16,16 @@ export const isLoggedIn = async (req,resizeBy,next) =>{
         }
         jwt.verify(token, process.env.JWT_SECRET)
         console.log("decoded data:", decoded);
-        
+        req.user = decoded
+
+        next()
     }   
     catch(error){
-
+     console.log("Auth middleware Failure");
+     return res.status(500).json({
+        success: false,
+        message: "Internal server error"
+     })
     }
     next();
 }
