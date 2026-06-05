@@ -10,24 +10,22 @@ export const isLoggedIn = async (req,resizeBy,next) =>{
             console.log("NO token");
             return res.status(401).json({
             success: false,
-            message: "Authentication failed"
+            message: "Authentication failed",
             
         })
 
         }
-        jwt.verify(token, process.env.JWT_SECRET)
+       const decoded = await jwt.verify(token, process.env.JWT_SECRET)
         console.log("decoded data:", decoded);
-        req.user = decoded
+        req.user = decoded;
 
-        next()
+        next();
     }   
     catch(error){
      console.log("Auth middleware Failure");
      return res.status(500).json({
         success: false,
-        message: "Internal server error"
+        message: "Internal server error",
      })
     }
-
-    next();
 }
