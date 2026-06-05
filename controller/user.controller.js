@@ -237,16 +237,31 @@ const logoutUser = async (req,res) =>{
 };
 const forgotPassword = async (req,res) =>{
     try {
-
+    //get email
+    //find user based on email
+    //reset token + reset expiry =>Date.now() + 10 * 60* 1000=>user.save()
+    //send mail => design url
     }
     catch(error)
-    {
-        
-    }
+    {}
 };
 const resetPassword = async (req,res) =>{
     try {
+   // collect token from params
+   //password from req.body
+   const {token} = req.params
+   const {password}= req.body
+   try{
+    const user = await User.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: {$gt: Date.now()}
+    })
+    // set password in user 
+    //resetToken, resetExpiry =>reset
+    //save
+   } catch(error){
 
+   }
     }
     catch(error)
     {
