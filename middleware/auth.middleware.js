@@ -11,7 +11,8 @@ export const isLoggedIn = async (req,resizeBy,next) =>{
             return res.status(401).json({
             success: false,
             message: "Authentication failed"
-            })
+            
+        })
 
         }
         jwt.verify(token, process.env.JWT_SECRET)
@@ -27,5 +28,6 @@ export const isLoggedIn = async (req,resizeBy,next) =>{
         message: "Internal server error"
      })
     }
+
     next();
 }
