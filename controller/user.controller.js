@@ -203,7 +203,7 @@ const login = async (req, res) => {
 };
 const getMe = async (req,res) =>{
     try {
-
+     console.log("reached at profile level");
     }
     catch(error)
     {
