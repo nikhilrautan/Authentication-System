@@ -237,7 +237,8 @@ const resetPassword = async (req,res) =>{
     {
         
     }
-}
+};
+
 export { registerUser, 
     verifyUser, 
     login ,
