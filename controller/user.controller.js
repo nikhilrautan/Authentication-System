@@ -220,7 +220,7 @@ const getMe = async (req,res) =>{
     {
 
     }
-}
+};
 
 const logoutUser = async (req,res) =>{
     try {
@@ -234,7 +234,7 @@ const logoutUser = async (req,res) =>{
     {
         
     }
-}
+};
 const forgotPassword = async (req,res) =>{
     try {
 
@@ -243,7 +243,7 @@ const forgotPassword = async (req,res) =>{
     {
         
     }
-}
+};
 const resetPassword = async (req,res) =>{
     try {
 
