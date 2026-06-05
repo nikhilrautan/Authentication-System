@@ -166,7 +166,7 @@ const login = async (req, res) => {
 
         const token = jwt.sign(
             { id: user._id, ROLE: user.role },
-           process.env. ,
+           process.env.
             {
                 expiresIn: "24h"
             }
@@ -205,6 +205,45 @@ const getMe = async (req,res) =>{
     try {
 
     }
-};
+    catch(error)
+    {
 
-export { registerUser, verifyUser, login };
+    }
+}
+
+const logoutUser = async (req,res) =>{
+    try {
+
+    }
+    catch(error)
+    {
+        
+    }
+}
+const forgotPassword = async (req,res) =>{
+    try {
+
+    }
+    catch(error)
+    {
+        
+    }
+}
+const resetPassword = async (req,res) =>{
+    try {
+
+    }
+    catch(error)
+    {
+        
+    }
+}
+export { registerUser, 
+    verifyUser, 
+    login ,
+    getMe,
+    logoutUser,
+    resetPassword,
+    forgotPassword,
+
+};
