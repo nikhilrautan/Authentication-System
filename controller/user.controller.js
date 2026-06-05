@@ -203,7 +203,18 @@ const login = async (req, res) => {
 };
 const getMe = async (req,res) =>{
     try {
-     console.log("reached at profile level");
+     const user = await User.findById(req.user.id).select
+     ('-password')
+     if(!user){
+        return res.status(400).json({
+            success: false,
+            message: "User not found",
+        });
+     }
+    res.status(200).json({
+        success: true,
+        user
+    })
     }
     catch(error)
     {
@@ -213,7 +224,7 @@ const getMe = async (req,res) =>{
 
 const logoutUser = async (req,res) =>{
     try {
-
+      res.cookie('token','',{});
     }
     catch(error)
     {
