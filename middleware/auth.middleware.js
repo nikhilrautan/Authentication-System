@@ -16,4 +16,5 @@ export const isLoggedIn = async (req,resizeBy,next) =>{
     catch(error){
 
     }
+    next();
 }
