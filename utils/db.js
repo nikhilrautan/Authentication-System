@@ -15,5 +15,4 @@ const db = async () => {
     console.log("MongoDB Error:", err.message);
   }
 };
-
 export default db;
