@@ -13,7 +13,6 @@ export const isLoggedIn = async (req,resizeBy,next) =>{
             message: "Authentication failed",
             
         })
-
         }
        const decoded = await jwt.verify(token, process.env.JWT_SECRET)
         console.log("decoded data:", decoded);
